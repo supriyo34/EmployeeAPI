@@ -3,5 +3,6 @@
   <Folder Name="/.github/workflows/">
     <File Path="build.yml" />
   </Folder>
+  <Project Path="EmployeeAPI.Tests/EmployeeAPI.Tests.csproj" />
   <Project Path="EmployeeAPI/EmployeeAPI.csproj" />
 </Solution>
