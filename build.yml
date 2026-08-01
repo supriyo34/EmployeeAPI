@@ -1,0 +1,42 @@
+name: Build Employee API
+
+on:
+  push:
+    branches:
+      - master
+
+  pull_request:
+    branches:
+      - master
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build & Publish
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET 10 SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Restore NuGet Packages
+        run: dotnet restore EmployeeAPI/EmployeeAPI.csproj
+
+      - name: Build Project
+        run: dotnet build EmployeeAPI/EmployeeAPI.csproj --configuration Release --no-restore
+
+      - name: Publish Project
+        run: dotnet publish EmployeeAPI/EmployeeAPI.csproj --configuration Release --no-build --output ./publish
+
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: EmployeeAPI-Publish
+          path: ./publish
+          if-no-files-found: error
