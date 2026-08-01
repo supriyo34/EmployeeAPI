@@ -13,32 +13,43 @@ on:
 
 jobs:
   build:
-    name: Build & Publish
+    name: Build, Test & Publish
     runs-on: ubuntu-latest
 
     steps:
+      # Checkout source code
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      # Install .NET SDK
       - name: Setup .NET 10 SDK
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '10.0.x'
 
+      # Restore NuGet packages
       - name: Restore NuGet Packages
-        run: dotnet restore EmployeeAPI/EmployeeAPI.csproj
+        run: dotnet restore EmployeeAPI.sln
 
-      - name: Build Project
-        run: dotnet build EmployeeAPI/EmployeeAPI.csproj --configuration Release --no-restore
+      # Build solution
+      - name: Build Solution
+        run: dotnet build EmployeeAPI.sln --configuration Release --no-restore
 
+      # Run Unit Tests
+      - name: Run Unit Tests
+        run: dotnet test EmployeeAPI.sln --configuration Release --no-build --verbosity normal
+
+      # Publish API Project
       - name: Publish Project
         run: dotnet publish EmployeeAPI/EmployeeAPI.csproj --configuration Release --no-build --output ./publish
 
+      # Verify publish output
       - name: Verify Publish Output
         run: |
           echo "Published Files:"
           ls -R ./publish
 
+      # Upload artifact
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v4
         with:
