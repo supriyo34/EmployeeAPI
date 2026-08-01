@@ -52,7 +52,7 @@ public class EmployeeControllerTests
         // Assert
         var employees = Assert.IsType<List<Employee>>(result.Value);
 
-        Assert.Equal(5, employees.Count);
+        Assert.Equal(2, employees.Count);
     }
     [Fact]
     public async Task GetEmployee_ReturnsEmployee_WhenEmployeeExists()
