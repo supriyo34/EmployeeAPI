@@ -105,7 +105,6 @@ jobs:
           if-no-files-found: error
           retention-days: 7
 
-
   # -----------------------------
   # Job 4 - Docker Build
   # -----------------------------
@@ -115,22 +114,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout repository (Dockerfile is needed)
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      # Download published artifact
       - name: Download Publish Artifact
         uses: actions/download-artifact@v4
         with:
           name: EmployeeAPI-Publish
           path: ./publish
 
-      # Build Docker image
       - name: Build Docker Image
-  run: |
-    docker build -t employeeapi:latest -f EmployeeAPI/Dockerfile EmployeeAPI
+        run: |
+          docker build \
+            -f EmployeeAPI/Dockerfile \
+            -t employeeapi:latest \
+            EmployeeAPI
 
-      # Verify Docker image
       - name: List Docker Images
         run: docker images
