@@ -1,0 +1,36 @@
+version: "3.9"
+
+services:
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver
+
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "April@71526"
+
+    ports:
+      - "1433:1433"
+
+    volumes:
+      - sql_data:/var/opt/mssql
+
+  employeeapi:
+    build:
+      context: ./EmployeeAPI
+      dockerfile: Dockerfile
+
+    container_name: employeeapi
+
+    depends_on:
+      - sqlserver
+
+    ports:
+      - "8080:8080"
+
+    environment:
+      ConnectionStrings__EmployeeDb: "Server=sqlserver;Database=EmployeeDB;User Id=sa;Password=April@71526;TrustServerCertificate=True;"
+
+volumes:
+  sql_data:
