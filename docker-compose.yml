@@ -27,7 +27,7 @@ services:
       - sqlserver
 
     ports:
-      - "8080:8080"
+      - "5001:8080"
 
     environment:
       ConnectionStrings__EmployeeDb: "Server=sqlserver;Database=EmployeeDB;User Id=sa;Password=April@71526;TrustServerCertificate=True;"
