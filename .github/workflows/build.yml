@@ -128,8 +128,8 @@ jobs:
 
       # Build Docker image
       - name: Build Docker Image
-        run: |
-          docker build -t employeeapi:latest .
+  run: |
+    docker build -t employeeapi:latest -f EmployeeAPI/Dockerfile EmployeeAPI
 
       # Verify Docker image
       - name: List Docker Images
