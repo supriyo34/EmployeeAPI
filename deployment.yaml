@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: employeeapi
+
+spec:
+  replicas: 2
+
+  selector:
+    matchLabels:
+      app: employeeapi
+
+  template:
+    metadata:
+      labels:
+        app: employeeapi
+
+    spec:
+      containers:
+      - name: employeeapi
+        image: sdhar2/employeeapi:latest
+        imagePullPolicy: Always
+
+        ports:
+        - containerPort: 8080
+
+        env:
+        - name: ConnectionStrings__EmployeeDb
+          value: "Server=sqlserver-service;Database=EmployeeDB;User Id=sa;Password=April@71526;TrustServerCertificate=True;"
