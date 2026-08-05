@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+
+metadata:
+  name: employeeapi-config
+
+data:
+  DB_SERVER: sqlserver-service
+  DB_NAME: EmployeeDB
+  ASPNETCORE_ENVIRONMENT: Production
